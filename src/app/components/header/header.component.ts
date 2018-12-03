@@ -14,34 +14,15 @@ export class HeaderComponent implements OnInit {
 
   select = 'Dropdown';
 
-  two = ['Food', 'Packs', 'Events', 'Services', 'Coupons']
-
-  isAuth = false;
-
-  hola = false;
-  isAuth$: Observable<boolean>;
+  two = ['Food', 'Packs', 'Events', 'Services', 'Coupons'] 
  
   constructor(
     private _data: DataService, 
     private _auth:AuthService
     ) {
-    // _auth.authState.subscribe(state => {this.isAuth = state;
-    // console.log(this.isAuth);
-    // });
-
-    this._auth.hola.subscribe(x => {this.hola = x;
-    console.log("hola", this.hola);
-    })
-
-    this.isAuth$ = _auth.authState;
-    // _data.getJobApplies().subscribe(data => console.log(data))
    }
 
-   ngOnInit() { 
-    this._auth.authState.subscribe(state => {this.isAuth = state;
-      console.log(this.isAuth);
-      });
-   }
+   ngOnInit() { }
 
   choose(opt) {
     this.select = opt;

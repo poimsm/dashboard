@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
-import { auth } from 'firebase/app';
-declare var FB: any;
 
 @Component({
   selector: 'app-login',
@@ -16,46 +12,14 @@ export class LoginComponent implements OnInit {
   email: string;
 
   constructor(
-    private afAuth: AngularFireAuth,
-    private _auth: AuthService,
-    private _router:Router
+    private _auth: AuthService
     ) { }
 
-    ngOnInit() {
-
-      (window as any).fbAsyncInit = function() {
-        FB.init({
-          appId      : '1851546425153902',
-          cookie     : true,
-          xfbml      : true,
-          version    : 'v3.1'
-        });
-        FB.AppEvents.logPageView();
-      };
-  
-      (function(d, s, id) {
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "https://connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       } (document, 'script', 'facebook-jssdk'));
-  
+    login(){
+      const access_token = "EAAaTZBL702W4BALzFQEadOnn1O5YQsqKeNSavYubhxKkMtPA2fmFuRLBpCeIL5htJ85h6EOuc5AW2VPbHWt6y5ZAhBzuOV1KVW1rJnD2m0dbXKt32mvwdpQ3baKyQySpBUqM6QVdjOcUBPdZBS0OZCFHgrA7MwcZD";
+      this._auth.login(access_token);
     }
-
-  submitLogin(){
-    FB.login((response)=> {
-      if (response.authResponse) {
-
-        const access_token = response.authResponse.accessToken;        
-        this._auth.login(access_token);
-        this._router.navigateByUrl('/home');
-        
-        } else {
-        console.log('User cancelled login or did not fully authorize.');
-        }
-      });
-  }
+    ngOnInit() {}
   
 
 }

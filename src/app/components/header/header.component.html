@@ -31,20 +31,8 @@
               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
         </li> -->
-      </ul>  
-    <h1> 1{{_auth.isAuth}} </h1>
-    <h1> 2{{isAuth}} </h1>
-    <h1> 3{{ (isAuth$ | async) }} </h1>
-    <h3> 4{{ hola }} </h3>
-
-
-  <button routerLink='login' (click)="_auth.login('ads')" class="btn btn-outline-primary" type="button">
-        asa
-      </button>  
-      <button routerLink='login' (click)="_auth.logout()" class="btn btn-outline-primary" type="button">
-          asa2
-        </button>  
-
+      </ul> 
+      
       <button routerLink='login' *ngIf="!_auth.isAuth" class="btn btn-outline-primary" type="button">
         Login
       </button>    

@@ -1,54 +1,44 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Subject } from "rxjs/Subject";
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
   // apiURL = "http://localhost:3000";
   // apiURL = "http://192.168.1.8:3000";
   apiURL = "https://poimsm-server.herokuapp.com"; 
-  authState = new Subject<boolean>();
-  hola = new Observable<boolean>();
 
   isAuth = false;
 
   constructor(
-    public http: HttpClient
-  ) {          this.authState.next(false);
-  }
+    public http: HttpClient,
+    private _router: Router
+
+  ) { }
 
   async login(accessToken) {
     try {
 
-      // const resToken: any = await this.getToken(accessToken);
-      // const resUser: any = await this.getUser(resToken.token);
-      // this.saveStorage(resUser.user, resToken.token);
-      this.authState.next(true);
+      const resToken: any = await this.getToken(accessToken);
+      const resUser: any = await this.getUser(resToken.token);      
+    
+      this.saveStorage(resUser.user, resToken.token);
       this.isAuth = true;
-      this.hola = new Observable(observer => observer.next(true));
-
+      this._router.navigateByUrl('/home');
 
     } catch (error) {
-      this.hola = new Observable(observer => observer.next(false));
-
-      this.authState.next(false);
       this.isAuth = false;
-
       console.log("Error", error);
     }
   }
 
   logout() {
     this.removeStorage();
-    this.authState.next(false);
     this.isAuth = false;
-
-    this.hola = new Observable(observer => observer.next(false));
-
   }
 
   saveStorage(user, token) {
@@ -61,21 +51,17 @@ export class AuthService {
         if (localStorage.getItem("credentials")) {
           const retrievedData = localStorage.getItem("credentials");
           
-          this.authState.next(true);
-          this.isAuth = true;
-
-
           const data = {
             isAuth: true,
             user: JSON.parse(retrievedData).user,
             token: JSON.parse(retrievedData).token
           }
-          
+
+          this.isAuth = true;
           resolve(data);
         } else {
-          this.isAuth = false;
 
-          this.authState.next(false);
+          this.isAuth = false;
           resolve({ isAuth: false });
         }      
     });
@@ -90,6 +76,7 @@ export class AuthService {
     const body = { access_token: accessToken };
     return this.http.post(url, body).toPromise();
   }
+
   getUser(token) {
     const url = `${this.apiURL}/users/me`;
     const headers = new HttpHeaders({
