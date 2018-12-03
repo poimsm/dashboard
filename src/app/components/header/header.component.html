@@ -1,0 +1,55 @@
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+   
+  <a class="navbar-brand" href="#">Panel</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">       
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{select}}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a routerLink="grid" (click)="choose('Destacados')" class="dropdown-item">Home - Adds</a>
+              <a routerLink="grid" (click)="choose('Destacados')" class="dropdown-item">Home - Tiendas</a>
+              <a routerLink="grid" (click)="choose('Destacados')" class="dropdown-item">Explore - Destacado | Servicios</a>
+              <a routerLink="grid" (click)="choose('Destacados')" class="dropdown-item">Explore - Destacado | Eventos</a>
+              <div class="dropdown-divider"></div>
+              <a routerLink="delivery" (click)="choose('Delivery')" class="dropdown-item">Shoppers</a>
+              <a routerLink="delivery" (click)="choose('Delivery')" class="dropdown-item">Stores</a>
+              <a routerLink="delivery" (click)="choose('Delivery')" class="dropdown-item">Shopper's applications</a>
+              <a routerLink="delivery" (click)="choose('Delivery')" class="dropdown-item">Store's applications</a>
+              <div class="dropdown-divider"></div>
+              <a routerLink="grid" *ngFor="let item of two" (click)="choose(item)" class="dropdown-item">{{item}}</a>
+          </div>
+        </li>
+        <!-- <li>
+          <form class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="search" placeholder="Buscar id" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </li> -->
+      </ul>  
+    <h1> 1{{_auth.isAuth}} </h1>
+    <h1> 2{{isAuth}} </h1>
+    <h1> 3{{ (isAuth$ | async) }} </h1>
+    <h3> 4{{ hola }} </h3>
+
+
+  <button routerLink='login' (click)="_auth.login('ads')" class="btn btn-outline-primary" type="button">
+        asa
+      </button>  
+      <button routerLink='login' (click)="_auth.logout()" class="btn btn-outline-primary" type="button">
+          asa2
+        </button>  
+
+      <button routerLink='login' *ngIf="!_auth.isAuth" class="btn btn-outline-primary" type="button">
+        Login
+      </button>    
+      <button routerLink='login' (click)="onLogout()" *ngIf="_auth.isAuth" class="btn btn-outline-primary" type="button">
+        Logout
+      </button>
+    </div>
+  </nav>
